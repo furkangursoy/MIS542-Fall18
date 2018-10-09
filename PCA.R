@@ -15,7 +15,7 @@ autox.df <- auto.df[,-c(1,7,8)] #create a new data frame storing only the desire
 names(autox.df) #check that we have all and only desired variables in our data frame
 
 
-### Check suitability of dataset for PCA ###
+### Check suitability of dataset for PCA ### (NOT SHOWN IN THE LAB)
 KMO(autox.df) #kaiser-meyer-olkin measure of sampling adequacy. MSA values greater than 0.5 or 0.6 usually indicate suitability
 KMO(cor(autox.df)) #see that we can obtain the same result by directly supplying correlation matrix
 
