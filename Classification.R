@@ -1,10 +1,16 @@
-#install.packages("rpart")
-library(rpart)
+#install.packages("rpart") 
+#install.packages("class")
+#install.packages("e1071")
+library(rpart) #decision tree
+library(class) #k-nn classifier
+library(e1071) #naive bayes classifier
 
 # read the dataset and split it into train and test sets #
 auto.df <- read.table("autompg1.csv", header=TRUE, sep=",")
+auto.df$origin <- factor(auto.df$origin)
 
-ind <- sample(2, nrow(auto.df), r = TRUE, pr = c(0.7, 0.3)) #approx 70% of all values will be 1 and the rest will be 0
+
+ind <- sample(1:2, nrow(auto.df), r = TRUE, pr = c(0.7, 0.3)) #approx 70% of all values will be 1 and the rest will be 0
 auto.train <- auto.df[ind==1,] #select approx 70% of the rows and create the training set
 auto.test <- auto.df[ind==2,] #select remaining approx 30% of the rows and create the test set
 
@@ -55,5 +61,19 @@ auto.tree3.train.accuracy
 auto.test.pred <- predict(auto.tree3, auto.test, type="class") #predicted values for the test set
 auto.tree3.test.accuracy <- sum(auto.test.pred == auto.test$origin)/nrow(auto.test) #overall accuracy
 auto.tree3.test.accuracy
+
+# create a k-nn classifier model #
+auto.knn <- knn(train=auto.train, test=auto.test, cl = auto.train$origin) #predicted values for the test set
+table(auto.knn, auto.test$origin) 
+knn.accuracy <- sum(auto.knn == auto.test$origin) / nrow(auto.test) #overall accuracy
+knn.accuracy
+
+# create a naive bayes classifier #
+auto.bayes <- naiveBayes(auto.formula, auto.train) #train the model
+auto.bayes
+auto.bayes.pred <- predict(auto.bayes, auto.test) #predictions for the test set
+table(auto.bayes.pred, auto.test$origin) #the confusion matrix
+nb.accuracy <- sum(auto.bayes.pred == auto.test$origin) / nrow(auto.test) #overall accuracy for the test set
+nb.accuracy
 
 
