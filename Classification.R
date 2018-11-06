@@ -121,7 +121,7 @@ auto.test$isUSA <- ifelse(auto.test$origin == 1, 1, 0)
 names(auto.train)
 auto.formula.nn <- isUSA ~ mpg + cylinders + displacement + horsepower + weight #we only want to use these predictors and not all
 
-# range transformation to [0,1] for training and test sets. this is not a efficient way. a function would be desired
+# range transformation to [0,1] for training and test sets. this is not an efficient way. a function would be desired
 max <- NULL
 min <- NULL
 for(i in 1:7){
