@@ -150,7 +150,7 @@ for(i in 1:7){
 }
 
 
-auto.nn22 <- neuralnet(auto.formula.nn, auto.trainRT, hidden =c(2,2)) #build a neural network with 2 hidden layers and 2 nodes in each hidden layer
+auto.nn22 <- neuralnet(auto.formula.nn, auto.trainRT, hidden =c(2,2), stepmax=1e+07, linear.output=FALSE) #build a neural network with 2 hidden layers and 2 nodes in each hidden layer
 plot(auto.nn22) #visualize the neural networks
 nn22.results <- compute(auto.nn22, auto.testRT[,1:5])$net.result #neural network predictions (continuous values)
 nn22.pred <- ifelse(nn22.results>0.5, 1, 0) #cut at 0.5 and predict larger values as US, smaller values as not US. Values other than 0.5 can also be used.
@@ -163,7 +163,7 @@ nn22.predT <- ifelse(nn22.resultsT>0.5, 1, 0)
 nn22.accuracyT <-sum(nn22.predT == auto.train$isUSA) / nrow(auto.train)
 nn22.accuracyT #compare with the other neural network's accuracy
 
-auto.nn242 <- neuralnet(auto.formula.nn, auto.trainRT, hidden =c(2,4,2)) #neural network with 3 hidden layers. 2,4, and 2 nodes at each hidden layer respectively.
+auto.nn242 <- neuralnet(auto.formula.nn, auto.trainRT, hidden =c(2,4,2), stepmax=1e+07, linear.output=FALSE) #neural network with 3 hidden layers. 2,4, and 2 nodes at each hidden layer respectively.
 plot(auto.nn242) #visualize the neural network
 nn242.results <- compute(auto.nn242, auto.testRT[,1:5])$net.result
 nn242.pred <- ifelse(nn242.results>0.5, 1, 0)
