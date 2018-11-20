@@ -177,3 +177,5 @@ nn242.accuracyT <-sum(nn242.predT == auto.train$isUSA) / nrow(auto.train)
 nn242.accuracyT #compare with the other neural network's accuracy
 
 # we have 2 neural networks. compare their accuracy on training and tests and see if there is overfitting. if you identify an overfitting, what could be a cause of overfitting? #
+
+## CHECK MIS 331 repository for neuralnet.R file to study multinomial classification (i.e., multiple output nodes)
