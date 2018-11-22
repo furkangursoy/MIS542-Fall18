@@ -56,7 +56,8 @@ pam(autox.scaled.df, 2) #see that result is the same as above line
 
 
 
-#set.seed(100) #be careful since all random numbers will be the same
+# set.seed(100) #be careful since all random numbers will be the same
+# use set.seed(NULL) re-initialize as if no seed had yet been set.
 
 
 
