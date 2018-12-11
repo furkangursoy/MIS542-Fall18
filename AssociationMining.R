@@ -65,3 +65,34 @@ inspect(rulesFiltered2)
 # I've noticed that there were issues installing arules package on macbooks. I am not using a Mac, and unfortunately I could not replicate or solve the issue.
 # this might (or might not) help: https://stackoverflow.com/questions/47352445/r-package-arules-installation-error-on-macos 
 ####
+
+
+
+#### SEQUENTIAL PATTERN MINING ####
+
+#install.packages("arulesSequences")
+
+library(arulesSequences)
+
+data(zaki)
+zaki
+summary(zaki)
+inspect(zaki)
+z <- as(zaki, "data.frame")
+z[order(z$eventID),]
+z[order(z$sequenceID),]
+
+s0 <- cspade(zaki, parameter = list(support = 0.50) ,control=list(verbose=F))
+
+
+data <- read.table("retdat.csv", sep=";", header = TRUE)
+names(data) <- c("sequenceID", "items", "eventID")
+data <- data[order(transactionInfo(data)$sequenceID),]
+
+df.trans <- as(df[,"items", drop = FALSE], "transactions")
+
+x <- read_baskets(con  = file("test.txt"), info = c("sequenceID","eventID","SIZE"))
+inspect(x)
+
+s1 <- cspade(x, parameter = list(support = 0.60), control=list(verbose=F))
+inspect(s1)
