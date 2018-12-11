@@ -1,3 +1,4 @@
+
 install.packages("arules")
 library(arules)
 
@@ -79,20 +80,36 @@ zaki
 summary(zaki)
 inspect(zaki)
 z <- as(zaki, "data.frame")
+z
 z[order(z$eventID),]
 z[order(z$sequenceID),]
 
-s0 <- cspade(zaki, parameter = list(support = 0.50) ,control=list(verbose=F))
+rules <- cspade(zaki, parameter = list(support = 0.50))
+inspect(rules)
+
+rules2 <- cspade(zaki, parameter = list(support = 0.25))
+inspect(rules2)
+
+rules3 <- cspade(zaki, parameter = list(support = 0.25, maxsize=1))
+inspect(rules3)
+
+rules4 <- cspade(zaki, parameter = list(support = 0.25, maxsize=1, maxlen=2))
+inspect(rules4)
 
 
-data <- read.table("retdat.csv", sep=";", header = TRUE)
-names(data) <- c("sequenceID", "items", "eventID")
-data <- data[order(transactionInfo(data)$sequenceID),]
+baskets <- read_baskets(con = file("test.txt"), info = c("sequenceID","eventID","SIZE"))
+inspect(baskets)
 
-df.trans <- as(df[,"items", drop = FALSE], "transactions")
+rules5 <- cspade(baskets, parameter = list(support = 0.30))
+inspect(rules5)
 
-x <- read_baskets(con  = file("test.txt"), info = c("sequenceID","eventID","SIZE"))
-inspect(x)
+rules6 <- cspade(baskets, parameter = list(support = 0.30, mingap=3))
+inspect(rules6)
 
-s1 <- cspade(x, parameter = list(support = 0.60), control=list(verbose=F))
-inspect(s1)
+
+rules7 <- cspade(baskets, parameter = list(support = 0.30, mingap= 3, maxgap=6))
+inspect(rules7)
+
+
+rules8 <- cspade(baskets, parameter = list(support = 0.30, maxwin=5)) #reydan says that maxwin is disabled in command line
+inspect(rules8)
